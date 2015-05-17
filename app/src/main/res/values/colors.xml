@@ -1,0 +1,7 @@
+<resources>
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="server_ip_field_text">#66818181</color>
+
+</resources>

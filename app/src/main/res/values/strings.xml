@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">NFC Sensor</string>
+    <string name="app_name">Signup Sheet</string>
 
-    <string name="explanation">Put your fucking phone on the card!</string>
+    <string name="server_ip">192.168.1.1</string>
+    <string name="confirm_button">Confirm</string>
     <string name="action_settings">Settings</string>
 </resources>
