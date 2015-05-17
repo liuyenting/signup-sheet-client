@@ -43,10 +43,12 @@ public class MainActivity extends ActionBarActivity {
     private class UserInfo {
         public String name = "";
         public String avatar = "";
+        public int status = -1;
 
-        public UserInfo(String _name, String _avatar) {
+        public UserInfo(String _name, String _avatar, int _status) {
             name = _name;
             avatar = _avatar;
+            status = _status;
         }
     }
 
@@ -61,14 +63,15 @@ public class MainActivity extends ActionBarActivity {
             final RelativeLayout r2 = (RelativeLayout)findViewById(R.id.screen2);
             final TextView name = (TextView)findViewById(R.id.name);
             final ImageView avy = (ImageView)findViewById(R.id.imageView2);
+            final TextView textView2 = (TextView)findViewById(R.id.textView2);
             name.setVisibility(View.VISIBLE);
             avy.setVisibility(View.VISIBLE);
             r2.setVisibility(View.VISIBLE);
 
             UserInfo info = (UserInfo)msg.obj;
-            if (info.name.equals("")) {
-                r2.setVisibility(View.VISIBLE);
-                name.setText("Invalid ID");
+            if (info.status != 200) {
+                textView2.setVisibility(View.VISIBLE);
+                textView2.setText("Invalid ID");
             }
             else {
                 name.setText(info.name);
@@ -85,6 +88,7 @@ public class MainActivity extends ActionBarActivity {
                     name.setVisibility(View.GONE);
                     avy.setVisibility(View.GONE);
                     r2.setVisibility(View.GONE);
+                    textView2.setVisibility(View.GONE);
                 }
             }, 2500);
 
@@ -112,6 +116,7 @@ public class MainActivity extends ActionBarActivity {
         final TextView name = (TextView)findViewById(R.id.name);
         final ImageView avy = (ImageView)findViewById(R.id.imageView2);
         final RelativeLayout r2 = (RelativeLayout)findViewById(R.id.screen2);
+        final TextView textView2 = (TextView)findViewById(R.id.textView2);
 
         //hide unused elements
         name.setVisibility(View.GONE);
@@ -119,6 +124,7 @@ public class MainActivity extends ActionBarActivity {
         server_ip.setVisibility(View.GONE);
         submit.setVisibility(View.GONE);
         r2.setVisibility(View.GONE);
+        textView2.setVisibility(View.GONE);
 
         //read from preference file
         SharedPreferences settings = getSharedPreferences("gis_demo", 0);
@@ -224,11 +230,12 @@ public class MainActivity extends ActionBarActivity {
                 JSONObject in = new JSONObject(EntityUtils.toString(response.getEntity()));
                 String name = in.getString("name");
                 String avatar = in.getString("avatar");
+                int status = response.getStatusLine().getStatusCode();
 
 
                 // Call the handler
                 Message msg = handler.obtainMessage();
-                msg.obj = new UserInfo(name, avatar);
+                msg.obj = new UserInfo(name, avatar, status);
                 handler.sendMessage(msg);
             }
             catch (IOException e) {
