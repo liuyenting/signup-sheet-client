@@ -16,7 +16,7 @@ namespace signup_sheet_client
         #region Card reader library functions.
 
         [DllImport("dcrf32.dll")]
-        public static extern int dc_init(Int16 port, long baud);
+        public static extern int dc_init(Int16 port, uint baud);
         [DllImport("dcrf32.dll")]
         public static extern int dc_exit(int icdev);
 
@@ -30,8 +30,8 @@ namespace signup_sheet_client
             InitializeComponent();
                
             // Primary functions initialization.
-            InitializeReader();
-            ConncetWithServer();
+            //InitializeReader();
+            //ConncetWithServer();
         }
 
         #region Initialization functions.

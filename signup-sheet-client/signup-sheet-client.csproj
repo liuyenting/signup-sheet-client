@@ -94,7 +94,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\dcrf32.dll" />
+    <Content Include="lib\dcrf32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="lib\dcrf32.h" />
   </ItemGroup>
   <ItemGroup>

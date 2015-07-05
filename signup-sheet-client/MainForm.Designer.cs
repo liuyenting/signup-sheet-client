@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.serverStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cardReaderStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cardStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cardReaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,9 +40,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.serverStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.cardReaderStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.cardStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.userInfoPanel = new System.Windows.Forms.Panel();
             this.mainStatusStrip.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
@@ -56,6 +56,29 @@
             this.mainStatusStrip.Size = new System.Drawing.Size(674, 22);
             this.mainStatusStrip.TabIndex = 0;
             this.mainStatusStrip.Text = "statusStrip1";
+            // 
+            // serverStatusLabel
+            // 
+            this.serverStatusLabel.AutoSize = false;
+            this.serverStatusLabel.Name = "serverStatusLabel";
+            this.serverStatusLabel.Size = new System.Drawing.Size(200, 17);
+            this.serverStatusLabel.Text = "Disconnected";
+            this.serverStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cardReaderStatus
+            // 
+            this.cardReaderStatus.AutoSize = false;
+            this.cardReaderStatus.Name = "cardReaderStatus";
+            this.cardReaderStatus.Size = new System.Drawing.Size(150, 17);
+            this.cardReaderStatus.Text = "Disconnected";
+            this.cardReaderStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cardStatus
+            // 
+            this.cardStatus.AutoSize = false;
+            this.cardStatus.Name = "cardStatus";
+            this.cardStatus.Size = new System.Drawing.Size(100, 17);
+            this.cardStatus.Text = "-";
             // 
             // mainMenuStrip
             // 
@@ -82,24 +105,24 @@
             // cardReaderToolStripMenuItem
             // 
             this.cardReaderToolStripMenuItem.Name = "cardReaderToolStripMenuItem";
-            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.cardReaderToolStripMenuItem.Text = "Card Reader...";
             // 
             // serverToolStripMenuItem
             // 
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.serverToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.serverToolStripMenuItem.Text = "Server...";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(144, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // helpToolStripMenuItem
@@ -113,31 +136,8 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
-            // 
-            // serverStatusLabel
-            // 
-            this.serverStatusLabel.AutoSize = false;
-            this.serverStatusLabel.Name = "serverStatusLabel";
-            this.serverStatusLabel.Size = new System.Drawing.Size(200, 17);
-            this.serverStatusLabel.Text = "Unknown";
-            this.serverStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cardReaderStatus
-            // 
-            this.cardReaderStatus.AutoSize = false;
-            this.cardReaderStatus.Name = "cardReaderStatus";
-            this.cardReaderStatus.Size = new System.Drawing.Size(150, 17);
-            this.cardReaderStatus.Text = "Unknown";
-            this.cardReaderStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cardStatus
-            // 
-            this.cardStatus.AutoSize = false;
-            this.cardStatus.Name = "cardStatus";
-            this.cardStatus.Size = new System.Drawing.Size(100, 17);
-            this.cardStatus.Text = "FFFFFF";
             // 
             // userInfoPanel
             // 
