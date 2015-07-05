@@ -85,7 +85,7 @@ namespace signup_sheet_client
          * @arg port The port that the card reader is at.
          * @return bool Indicate whether the initialization successful or not.
          */
-        private bool InitializeReader(Int16 port)
+        private bool InitializeCardReader(Int16 port)
         {
             SetCardReaderStatus("Connecting...", Color.Black);
 
@@ -318,15 +318,13 @@ namespace signup_sheet_client
         private void AskForServerIP()
         {
             // Initiate the prompt dialog.
-            AskForServer promptDialog = new AskForServer();
-            
-            if(promptDialog.ShowDialog(this) == DialogResult.OK)
+            using(AskForServer promptDialog = new AskForServer())
             {
-                this.serverAddress = promptDialog.Address;
+                if(promptDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    this.serverAddress = promptDialog.Address;
+                }
             }
-
-            // Close the dialog.
-            promptDialog.Dispose();
 
             TryServerConnection();
         }
@@ -380,7 +378,7 @@ namespace signup_sheet_client
             }
 
             // Initialize the reader through helper function.
-            if(InitializeReader(cardReaderPort))
+            if(InitializeCardReader(cardReaderPort))
             {
                 // Enable the stop button if initialization succeed.
                 this.stopReadingToolStripMenuItem.Visible = true;
