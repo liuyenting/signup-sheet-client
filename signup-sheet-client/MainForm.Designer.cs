@@ -218,6 +218,7 @@
             this.userAvatar.Location = new System.Drawing.Point(80, 36);
             this.userAvatar.Name = "userAvatar";
             this.userAvatar.Size = new System.Drawing.Size(225, 300);
+            this.userAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.userAvatar.TabIndex = 1;
             this.userAvatar.TabStop = false;
             // 
