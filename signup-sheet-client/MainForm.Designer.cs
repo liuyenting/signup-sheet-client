@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.serverStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.cardReaderStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -35,6 +36,7 @@
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cardReaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopReadingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +48,8 @@
             this.userFirstName = new System.Windows.Forms.Label();
             this.userAvatar = new System.Windows.Forms.PictureBox();
             this.cardReaderBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.userInfoTimer = new System.Windows.Forms.Timer(this.components);
+            this.invalidUserTimer = new System.Windows.Forms.Timer(this.components);
             this.mainStatusStrip.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
             this.userInfoPanel.SuspendLayout();
@@ -76,6 +80,8 @@
             // cardReaderStatus
             // 
             this.cardReaderStatus.AutoSize = false;
+            this.cardReaderStatus.BackColor = System.Drawing.SystemColors.Control;
+            this.cardReaderStatus.Margin = new System.Windows.Forms.Padding(3, 3, 0, 2);
             this.cardReaderStatus.Name = "cardReaderStatus";
             this.cardReaderStatus.Size = new System.Drawing.Size(150, 17);
             this.cardReaderStatus.Text = "Disconnected";
@@ -84,6 +90,8 @@
             // cardStatus
             // 
             this.cardStatus.AutoSize = false;
+            this.cardStatus.BackColor = System.Drawing.SystemColors.Control;
+            this.cardStatus.Margin = new System.Windows.Forms.Padding(3, 3, 0, 2);
             this.cardStatus.Name = "cardStatus";
             this.cardStatus.Size = new System.Drawing.Size(100, 17);
             this.cardStatus.Text = "-";
@@ -103,6 +111,7 @@
             // 
             this.connectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cardReaderToolStripMenuItem,
+            this.stopReadingToolStripMenuItem,
             this.serverToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
@@ -113,26 +122,34 @@
             // cardReaderToolStripMenuItem
             // 
             this.cardReaderToolStripMenuItem.Name = "cardReaderToolStripMenuItem";
-            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cardReaderToolStripMenuItem.Text = "Card Reader...";
             this.cardReaderToolStripMenuItem.MouseHover += new System.EventHandler(this.cardReaderToolStripMenuItem_MouseHover);
+            // 
+            // stopReadingToolStripMenuItem
+            // 
+            this.stopReadingToolStripMenuItem.Name = "stopReadingToolStripMenuItem";
+            this.stopReadingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.stopReadingToolStripMenuItem.Text = "Stop reading";
+            this.stopReadingToolStripMenuItem.Visible = false;
+            this.stopReadingToolStripMenuItem.Click += new System.EventHandler(this.stopReadingToolStripMenuItem_Click);
             // 
             // serverToolStripMenuItem
             // 
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.serverToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.serverToolStripMenuItem.Text = "Server...";
             this.serverToolStripMenuItem.Click += new System.EventHandler(this.serverToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(144, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -210,6 +227,14 @@
             this.cardReaderBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.cardReaderBackgroundWorker_DoWork);
             this.cardReaderBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.cardReaderBackgroundWorker_ProgressChanged);
             // 
+            // userInfoTimer
+            // 
+            this.userInfoTimer.Tick += new System.EventHandler(this.userInfoTimer_Tick);
+            // 
+            // invalidUserTimer
+            // 
+            this.invalidUserTimer.Tick += new System.EventHandler(this.invalidUserTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -257,6 +282,9 @@
         private System.Windows.Forms.Label userLastName;
         private System.Windows.Forms.Label userFirstName;
         private System.Windows.Forms.Label invalidUserLabel;
+        private System.Windows.Forms.Timer userInfoTimer;
+        private System.Windows.Forms.Timer invalidUserTimer;
+        private System.Windows.Forms.ToolStripMenuItem stopReadingToolStripMenuItem;
     }
 }
 
