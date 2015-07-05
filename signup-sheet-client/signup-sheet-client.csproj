@@ -66,7 +66,16 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="AskForServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AskForServer.Designer.cs">
+      <DependentUpon>AskForServer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AskForServer.resx">
+      <DependentUpon>AskForServer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

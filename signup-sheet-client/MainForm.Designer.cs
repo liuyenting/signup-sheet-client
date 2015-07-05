@@ -47,6 +47,7 @@
             // 
             // mainStatusStrip
             // 
+            this.mainStatusStrip.AllowMerge = false;
             this.mainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.serverStatusLabel,
             this.cardReaderStatus,
@@ -54,8 +55,8 @@
             this.mainStatusStrip.Location = new System.Drawing.Point(0, 397);
             this.mainStatusStrip.Name = "mainStatusStrip";
             this.mainStatusStrip.Size = new System.Drawing.Size(674, 22);
+            this.mainStatusStrip.SizingGrip = false;
             this.mainStatusStrip.TabIndex = 0;
-            this.mainStatusStrip.Text = "statusStrip1";
             // 
             // serverStatusLabel
             // 
@@ -105,14 +106,16 @@
             // cardReaderToolStripMenuItem
             // 
             this.cardReaderToolStripMenuItem.Name = "cardReaderToolStripMenuItem";
-            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cardReaderToolStripMenuItem.Text = "Card Reader...";
+            this.cardReaderToolStripMenuItem.MouseHover += new System.EventHandler(this.cardReaderToolStripMenuItem_MouseHover);
             // 
             // serverToolStripMenuItem
             // 
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.serverToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.serverToolStripMenuItem.Text = "Server...";
+            this.serverToolStripMenuItem.Click += new System.EventHandler(this.serverToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -122,8 +125,9 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -155,8 +159,12 @@
             this.Controls.Add(this.userInfoPanel);
             this.Controls.Add(this.mainStatusStrip);
             this.Controls.Add(this.mainMenuStrip);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.mainMenuStrip;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Signup Sheet - Client";
             this.mainStatusStrip.ResumeLayout(false);
             this.mainStatusStrip.PerformLayout();
