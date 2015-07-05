@@ -64,9 +64,9 @@
             this.serverStatusLabel,
             this.cardReaderStatus,
             this.cardStatus});
-            this.mainStatusStrip.Location = new System.Drawing.Point(0, 397);
+            this.mainStatusStrip.Location = new System.Drawing.Point(0, 465);
             this.mainStatusStrip.Name = "mainStatusStrip";
-            this.mainStatusStrip.Size = new System.Drawing.Size(674, 22);
+            this.mainStatusStrip.Size = new System.Drawing.Size(286, 22);
             this.mainStatusStrip.SizingGrip = false;
             this.mainStatusStrip.TabIndex = 0;
             // 
@@ -74,7 +74,7 @@
             // 
             this.serverStatusLabel.AutoSize = false;
             this.serverStatusLabel.Name = "serverStatusLabel";
-            this.serverStatusLabel.Size = new System.Drawing.Size(200, 17);
+            this.serverStatusLabel.Size = new System.Drawing.Size(100, 17);
             this.serverStatusLabel.Text = "Disconnected";
             this.serverStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -84,7 +84,7 @@
             this.cardReaderStatus.BackColor = System.Drawing.SystemColors.Control;
             this.cardReaderStatus.Margin = new System.Windows.Forms.Padding(3, 3, 0, 2);
             this.cardReaderStatus.Name = "cardReaderStatus";
-            this.cardReaderStatus.Size = new System.Drawing.Size(150, 17);
+            this.cardReaderStatus.Size = new System.Drawing.Size(100, 17);
             this.cardReaderStatus.Text = "Disconnected";
             this.cardReaderStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -94,7 +94,7 @@
             this.cardStatus.BackColor = System.Drawing.SystemColors.Control;
             this.cardStatus.Margin = new System.Windows.Forms.Padding(3, 3, 0, 2);
             this.cardStatus.Name = "cardStatus";
-            this.cardStatus.Size = new System.Drawing.Size(100, 17);
+            this.cardStatus.Size = new System.Drawing.Size(60, 17);
             this.cardStatus.Text = "-";
             // 
             // mainMenuStrip
@@ -104,7 +104,7 @@
             this.helpToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(674, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(286, 24);
             this.mainMenuStrip.TabIndex = 1;
             this.mainMenuStrip.Text = "MainMenu";
             // 
@@ -177,7 +177,7 @@
             this.userInfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.userInfoPanel.Location = new System.Drawing.Point(0, 24);
             this.userInfoPanel.Name = "userInfoPanel";
-            this.userInfoPanel.Size = new System.Drawing.Size(674, 373);
+            this.userInfoPanel.Size = new System.Drawing.Size(286, 441);
             this.userInfoPanel.TabIndex = 2;
             // 
             // invalidUserLabel
@@ -187,7 +187,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.invalidUserLabel.AutoSize = true;
             this.invalidUserLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidUserLabel.Location = new System.Drawing.Point(261, 166);
+            this.invalidUserLabel.Location = new System.Drawing.Point(77, 184);
             this.invalidUserLabel.Name = "invalidUserLabel";
             this.invalidUserLabel.Size = new System.Drawing.Size(117, 39);
             this.invalidUserLabel.TabIndex = 4;
@@ -195,27 +195,30 @@
             // 
             // userLastName
             // 
-            this.userLastName.AutoSize = true;
+            this.userLastName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.userLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userLastName.Location = new System.Drawing.Point(357, 135);
+            this.userLastName.Location = new System.Drawing.Point(30, 386);
+            this.userLastName.Margin = new System.Windows.Forms.Padding(3, 10, 3, 30);
             this.userLastName.Name = "userLastName";
-            this.userLastName.Size = new System.Drawing.Size(175, 31);
+            this.userLastName.Size = new System.Drawing.Size(225, 31);
             this.userLastName.TabIndex = 3;
             this.userLastName.Text = "LAST_NAME";
+            this.userLastName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // userFirstName
             // 
-            this.userFirstName.AutoSize = true;
             this.userFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userFirstName.Location = new System.Drawing.Point(357, 84);
+            this.userFirstName.Location = new System.Drawing.Point(30, 345);
             this.userFirstName.Name = "userFirstName";
-            this.userFirstName.Size = new System.Drawing.Size(187, 31);
+            this.userFirstName.Size = new System.Drawing.Size(225, 31);
             this.userFirstName.TabIndex = 2;
             this.userFirstName.Text = "FIRST_NAME";
+            this.userFirstName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // userAvatar
             // 
-            this.userAvatar.Location = new System.Drawing.Point(80, 36);
+            this.userAvatar.Location = new System.Drawing.Point(30, 21);
+            this.userAvatar.Margin = new System.Windows.Forms.Padding(30, 30, 30, 15);
             this.userAvatar.Name = "userAvatar";
             this.userAvatar.Size = new System.Drawing.Size(225, 300);
             this.userAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -241,7 +244,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(674, 419);
+            this.ClientSize = new System.Drawing.Size(286, 487);
             this.Controls.Add(this.userInfoPanel);
             this.Controls.Add(this.mainStatusStrip);
             this.Controls.Add(this.mainMenuStrip);

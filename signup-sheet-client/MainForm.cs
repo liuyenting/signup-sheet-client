@@ -197,7 +197,9 @@ namespace signup_sheet_client
 
                         // Parse user data from the response.
                         UserInfo newUserInfo = JsonConvert.DeserializeObject<UserInfo>(json);
-                        Console.WriteLine(newUserInfo.Avatar);
+                        
+                        // Temporary override...
+                        newUserInfo.CardId = cardId;
 
                         worker.ReportProgress(0, newUserInfo);
 
@@ -457,6 +459,11 @@ namespace signup_sheet_client
             get
             {
                 return this.cardId;
+            }
+            // Temporary enable set...
+            set
+            {
+                this.cardId = value;
             }
         }
 
