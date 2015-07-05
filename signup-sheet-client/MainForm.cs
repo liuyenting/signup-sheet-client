@@ -20,11 +20,16 @@ namespace signup_sheet_client
         public static extern int dc_init(Int16 port, uint baud);
         [DllImport("dcrf32.dll")]
         public static extern int dc_exit(int icdev);
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_card(int icdev, char _Mode, ref ulong Snr);
 
         #endregion
 
-        private int cardReaderID = -1;
+        private int cardReaderId = -1;
         private string serverAddress = "";
+
+        private const int displayTime = 1000;
+        private const int probeInterval = 1500;
 
         public MainForm()
         {
@@ -42,10 +47,10 @@ namespace signup_sheet_client
             SetCardReaderStatus("Connecting...", Color.Black);
 
             // Initialize the card reader.
-            this.cardReaderID = dc_init(port, 115200);
+            this.cardReaderId = dc_init(port, 115200);
 
             // Check the status of the card reader.
-            if(cardReaderID <= 0)
+            if(cardReaderId <= 0)
             {
                 SetCardReaderStatus("Failed.", Color.Red);
                 //throw new InvalidOperationException("Failed to connect the card reader.");
@@ -54,14 +59,20 @@ namespace signup_sheet_client
             {
                 SetCardReaderStatus("Connected.", Color.Green);
             }
+
+            // Start the background worker.
+            cardReaderBackgroundWorker.RunWorkerAsync();
         }
 
         private void DisconnectReader()
         {
+            // Stop the background worker.
+            cardReaderBackgroundWorker.CancelAsync();
+
             SetCardReaderStatus("Disconnecting...", Color.Black);
 
             // Initialize the card reader.
-            int status = dc_exit(this.cardReaderID);
+            int status = dc_exit(this.cardReaderId);
 
             // Check the status of the card reader.
             if(status == 0)
@@ -73,6 +84,9 @@ namespace signup_sheet_client
                 SetCardReaderStatus("Fail to disconnect.", Color.Red);
                 //throw new InvalidOperationException("Failed to connect the card reader.");
             }
+
+            // Reset the handler.
+            this.cardReaderId = -1;
         }
 
         private void ConncetWithServer()
@@ -86,27 +100,86 @@ namespace signup_sheet_client
 
         private void cardReaderBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            bool continuousRunning = true;
             BackgroundWorker worker = sender as BackgroundWorker;
-
-            for(int i = 1; (i <= 10); i++)
+            while(continuousRunning)
             {
-                if((worker.CancellationPending == true))
+                UserInfo newInfo = new UserInfo();
+
+                ulong cardId = 0;
+                // Operate in MODE1, ALL mode.
+                int status = dc_card(this.cardReaderId, (char)0, ref cardId);
+                if(status != 0)
                 {
-                    e.Cancel = true;
-                    break;
+                    worker.ReportProgress(0, newInfo);
+                    Console.WriteLine("Having problem reading the status.");
                 }
                 else
                 {
-                    // Perform a time consuming operation and report progress.
-                    System.Threading.Thread.Sleep(500);
-                    worker.ReportProgress((i * 10));
+                    // TODO: Request for info from server side.
+                    // TODO: Valid or not depend on server response.
+                    newInfo.Valid = true;
+
+                    // Write new data into the object.
+                    newInfo.CardId = cardId;
+
+                    Console.WriteLine("Acquired card ID = " + newInfo.CardId.ToString());
+
+                    worker.ReportProgress(1, newInfo);
                 }
+
+                // Prevent the loop from running too fast.
+                System.Threading.Thread.Sleep(probeInterval);
             }
         }
 
         private void cardReaderBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            // 0: Error reading the card.
+            // 1: Update the user info.
+            if(e.ProgressPercentage == 0)
+            {
+                Console.WriteLine("e.ProgressPercentage = 0");
 
+                SetCardStatus("Fail to read.", Color.Red);
+            }
+            else
+            {
+                Console.WriteLine("e.ProgressPercentage = 1");
+
+                UserInfo newInfo = e.UserState as UserInfo;
+
+                // Display acquired card ID.
+                this.cardStatus.Text = newInfo.CardId.ToString();
+                //SetCardStatus(newInfo.CardId.ToString(), Color.Black);
+
+                // Show invalid user if the flag bit is set.
+                if(newInfo.Valid)
+                {
+                    Console.WriteLine("Write new user info.");
+
+                    SetUserInfo(newInfo);
+                }
+                else
+                {
+                    Console.WriteLine("Show invalid user.");
+
+                    InvalidUser(true);
+                }
+            }
+
+            System.Threading.Thread.Sleep(displayTime);
+
+            // Reset the panel and the status bar after thread sleep.
+            SetCardStatus("-", Color.Black);
+            if(e.ProgressPercentage == 0)
+            {
+                InvalidUser(false);
+            }
+            else
+            {
+                UserInfoVisibility(false);
+            }
         }
 
         #endregion
@@ -119,6 +192,17 @@ namespace signup_sheet_client
             this.cardReaderStatus.ForeColor = stringColor;
         }
 
+        private void SetCardStatus(string cardId, Color stringColor)
+        {
+            this.cardStatus.Text = cardId;
+            this.cardStatus.ForeColor = stringColor;
+        }
+
+        private void InvalidUser(bool visible)
+        {
+            this.invalidUserLabel.Visible = visible;
+        }
+        
         private void SetUserInfo(UserInfo newInfo)
         {
             // Hide the panel first...
@@ -212,6 +296,12 @@ namespace signup_sheet_client
                 throw new InvalidOperationException("Unable to parse the tag, please notify the designer.");
             }
 
+            // Disconnect the reader first if it's still active.
+            if(this.cardReaderId != -1)
+            {
+                DisconnectReader();
+            }
+
             // Initialize the reader through helper function.
             InitializeReader(port);
         }
@@ -232,9 +322,37 @@ namespace signup_sheet_client
 
     public class UserInfo
     {
+        private bool valid = true;
+        private ulong cardId = 0;
         private Image avatar;
-        private String[] name;
-        
+        private String[] name = {"FIRST", "NAME"};
+
+        #region Encapsulations.
+
+        public ulong CardId
+        {
+            get
+            {
+                return cardId;
+            }
+            set
+            {
+                cardId = value;
+            }
+        }
+
+        public bool Valid
+        {
+            get
+            {
+                return valid;
+            }
+            set
+            {
+                valid = value;
+            }
+        }
+
         public Image Avatar
         {
             get
@@ -270,5 +388,7 @@ namespace signup_sheet_client
                 name[1] = value;
             }
         }
+    
+        #endregion
     }
 }

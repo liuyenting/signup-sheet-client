@@ -41,10 +41,11 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userInfoPanel = new System.Windows.Forms.Panel();
+            this.invalidUserLabel = new System.Windows.Forms.Label();
+            this.userLastName = new System.Windows.Forms.Label();
+            this.userFirstName = new System.Windows.Forms.Label();
             this.userAvatar = new System.Windows.Forms.PictureBox();
             this.cardReaderBackgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.userFirstName = new System.Windows.Forms.Label();
-            this.userLastName = new System.Windows.Forms.Label();
             this.mainStatusStrip.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
             this.userInfoPanel.SuspendLayout();
@@ -151,6 +152,7 @@
             // 
             // userInfoPanel
             // 
+            this.userInfoPanel.Controls.Add(this.invalidUserLabel);
             this.userInfoPanel.Controls.Add(this.userLastName);
             this.userInfoPanel.Controls.Add(this.userFirstName);
             this.userInfoPanel.Controls.Add(this.userAvatar);
@@ -159,6 +161,39 @@
             this.userInfoPanel.Name = "userInfoPanel";
             this.userInfoPanel.Size = new System.Drawing.Size(674, 373);
             this.userInfoPanel.TabIndex = 2;
+            // 
+            // invalidUserLabel
+            // 
+            this.invalidUserLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.invalidUserLabel.AutoSize = true;
+            this.invalidUserLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.invalidUserLabel.Location = new System.Drawing.Point(261, 166);
+            this.invalidUserLabel.Name = "invalidUserLabel";
+            this.invalidUserLabel.Size = new System.Drawing.Size(117, 39);
+            this.invalidUserLabel.TabIndex = 4;
+            this.invalidUserLabel.Text = "Invalid";
+            // 
+            // userLastName
+            // 
+            this.userLastName.AutoSize = true;
+            this.userLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userLastName.Location = new System.Drawing.Point(357, 135);
+            this.userLastName.Name = "userLastName";
+            this.userLastName.Size = new System.Drawing.Size(175, 31);
+            this.userLastName.TabIndex = 3;
+            this.userLastName.Text = "LAST_NAME";
+            // 
+            // userFirstName
+            // 
+            this.userFirstName.AutoSize = true;
+            this.userFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userFirstName.Location = new System.Drawing.Point(357, 84);
+            this.userFirstName.Name = "userFirstName";
+            this.userFirstName.Size = new System.Drawing.Size(187, 31);
+            this.userFirstName.TabIndex = 2;
+            this.userFirstName.Text = "FIRST_NAME";
             // 
             // userAvatar
             // 
@@ -174,26 +209,6 @@
             this.cardReaderBackgroundWorker.WorkerSupportsCancellation = true;
             this.cardReaderBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.cardReaderBackgroundWorker_DoWork);
             this.cardReaderBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.cardReaderBackgroundWorker_ProgressChanged);
-            // 
-            // userFirstName
-            // 
-            this.userFirstName.AutoSize = true;
-            this.userFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userFirstName.Location = new System.Drawing.Point(357, 84);
-            this.userFirstName.Name = "userFirstName";
-            this.userFirstName.Size = new System.Drawing.Size(187, 31);
-            this.userFirstName.TabIndex = 2;
-            this.userFirstName.Text = "FIRST_NAME";
-            // 
-            // userLastName
-            // 
-            this.userLastName.AutoSize = true;
-            this.userLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userLastName.Location = new System.Drawing.Point(357, 135);
-            this.userLastName.Name = "userLastName";
-            this.userLastName.Size = new System.Drawing.Size(175, 31);
-            this.userLastName.TabIndex = 3;
-            this.userLastName.Text = "LAST_NAME";
             // 
             // MainForm
             // 
@@ -241,6 +256,7 @@
         private System.Windows.Forms.PictureBox userAvatar;
         private System.Windows.Forms.Label userLastName;
         private System.Windows.Forms.Label userFirstName;
+        private System.Windows.Forms.Label invalidUserLabel;
     }
 }
 
