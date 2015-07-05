@@ -36,7 +36,7 @@ namespace signup_sheet_client
             //ConncetWithServer();
         }
 
-        #region Initialization functions.
+        #region Connection related functions.
 
         private void InitializeReader(Int16 port)
         {
@@ -54,6 +54,24 @@ namespace signup_sheet_client
             else
             {
                 SetCardReaderStatus("Connected.", Color.Green);
+            }
+        }
+
+        private void DisconnectReader()
+        {
+            SetCardReaderStatus("Disconnecting...", Color.Black);
+
+            // Initialize the card reader.
+            int status = dc_exit(this.cardReaderID);
+
+            // Check the status of the card reader.
+            if(status == 0)
+            {
+                SetCardReaderStatus("Disconnected.", Color.Black);
+            }
+            else
+            {
+                SetCardReaderStatus("Fail to disconnect.", Color.Red);
             }
         }
 
@@ -144,7 +162,8 @@ namespace signup_sheet_client
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            DisconnectReader();
+            this.Dispose();
         }
 
         #endregion
