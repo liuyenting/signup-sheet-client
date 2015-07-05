@@ -80,6 +80,11 @@ namespace signup_sheet_client
 
         #region Connection related functions.
 
+        /**
+         * Initialize the card reader through assigned port, port 100 is hard coded as USB in the API.
+         * @arg port The port that the card reader is at.
+         * @return bool Indicate whether the initialization successful or not.
+         */
         private bool InitializeReader(Int16 port)
         {
             SetCardReaderStatus("Connecting...", Color.Black);
