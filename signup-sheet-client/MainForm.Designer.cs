@@ -41,8 +41,14 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userInfoPanel = new System.Windows.Forms.Panel();
+            this.userAvatar = new System.Windows.Forms.PictureBox();
+            this.cardReaderBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.userFirstName = new System.Windows.Forms.Label();
+            this.userLastName = new System.Windows.Forms.Label();
             this.mainStatusStrip.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
+            this.userInfoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.userAvatar)).BeginInit();
             this.SuspendLayout();
             // 
             // mainStatusStrip
@@ -106,14 +112,14 @@
             // cardReaderToolStripMenuItem
             // 
             this.cardReaderToolStripMenuItem.Name = "cardReaderToolStripMenuItem";
-            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.cardReaderToolStripMenuItem.Text = "Card Reader...";
             this.cardReaderToolStripMenuItem.MouseHover += new System.EventHandler(this.cardReaderToolStripMenuItem_MouseHover);
             // 
             // serverToolStripMenuItem
             // 
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.serverToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.serverToolStripMenuItem.Text = "Server...";
             this.serverToolStripMenuItem.Click += new System.EventHandler(this.serverToolStripMenuItem_Click);
             // 
@@ -125,7 +131,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -145,11 +151,49 @@
             // 
             // userInfoPanel
             // 
+            this.userInfoPanel.Controls.Add(this.userLastName);
+            this.userInfoPanel.Controls.Add(this.userFirstName);
+            this.userInfoPanel.Controls.Add(this.userAvatar);
             this.userInfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.userInfoPanel.Location = new System.Drawing.Point(0, 24);
             this.userInfoPanel.Name = "userInfoPanel";
             this.userInfoPanel.Size = new System.Drawing.Size(674, 373);
             this.userInfoPanel.TabIndex = 2;
+            // 
+            // userAvatar
+            // 
+            this.userAvatar.Location = new System.Drawing.Point(80, 36);
+            this.userAvatar.Name = "userAvatar";
+            this.userAvatar.Size = new System.Drawing.Size(225, 300);
+            this.userAvatar.TabIndex = 1;
+            this.userAvatar.TabStop = false;
+            // 
+            // cardReaderBackgroundWorker
+            // 
+            this.cardReaderBackgroundWorker.WorkerReportsProgress = true;
+            this.cardReaderBackgroundWorker.WorkerSupportsCancellation = true;
+            this.cardReaderBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.cardReaderBackgroundWorker_DoWork);
+            this.cardReaderBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.cardReaderBackgroundWorker_ProgressChanged);
+            // 
+            // userFirstName
+            // 
+            this.userFirstName.AutoSize = true;
+            this.userFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userFirstName.Location = new System.Drawing.Point(357, 84);
+            this.userFirstName.Name = "userFirstName";
+            this.userFirstName.Size = new System.Drawing.Size(187, 31);
+            this.userFirstName.TabIndex = 2;
+            this.userFirstName.Text = "FIRST_NAME";
+            // 
+            // userLastName
+            // 
+            this.userLastName.AutoSize = true;
+            this.userLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userLastName.Location = new System.Drawing.Point(357, 135);
+            this.userLastName.Name = "userLastName";
+            this.userLastName.Size = new System.Drawing.Size(175, 31);
+            this.userLastName.TabIndex = 3;
+            this.userLastName.Text = "LAST_NAME";
             // 
             // MainForm
             // 
@@ -170,6 +214,9 @@
             this.mainStatusStrip.PerformLayout();
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
+            this.userInfoPanel.ResumeLayout(false);
+            this.userInfoPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.userAvatar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,6 +237,10 @@
         private System.Windows.Forms.ToolStripStatusLabel cardReaderStatus;
         private System.Windows.Forms.ToolStripStatusLabel cardStatus;
         private System.Windows.Forms.Panel userInfoPanel;
+        private System.ComponentModel.BackgroundWorker cardReaderBackgroundWorker;
+        private System.Windows.Forms.PictureBox userAvatar;
+        private System.Windows.Forms.Label userLastName;
+        private System.Windows.Forms.Label userFirstName;
     }
 }
 

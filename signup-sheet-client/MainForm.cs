@@ -30,10 +30,9 @@ namespace signup_sheet_client
         {
             // GUI initialization.
             InitializeComponent();
-               
-            // Primary functions initialization.
-            //InitializeReader();
-            //ConncetWithServer();
+
+            // Hide the default user info panel.
+            UserInfoVisibility(false);
         }
 
         #region Connection related functions.
@@ -72,6 +71,7 @@ namespace signup_sheet_client
             else
             {
                 SetCardReaderStatus("Fail to disconnect.", Color.Red);
+                //throw new InvalidOperationException("Failed to connect the card reader.");
             }
         }
 
@@ -82,7 +82,36 @@ namespace signup_sheet_client
 
         #endregion
 
-        #region Support functions.
+        #region Reader background worker.
+
+        private void cardReaderBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            for(int i = 1; (i <= 10); i++)
+            {
+                if((worker.CancellationPending == true))
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    // Perform a time consuming operation and report progress.
+                    System.Threading.Thread.Sleep(500);
+                    worker.ReportProgress((i * 10));
+                }
+            }
+        }
+
+        private void cardReaderBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region GUI support functions.
 
         private void SetCardReaderStatus(string statusString, Color stringColor)
         {
@@ -90,12 +119,44 @@ namespace signup_sheet_client
             this.cardReaderStatus.ForeColor = stringColor;
         }
 
+        private void SetUserInfo(UserInfo newInfo)
+        {
+            // Hide the panel first...
+            UserInfoVisibility(false);
+
+            // Update the content.
+            userAvatar.Image = newInfo.Avatar;
+            userFirstName.Text = newInfo.FirstName;
+            userLastName.Text = newInfo.LastName;
+
+            // ...restore the visibility of the panel.
+            UserInfoVisibility(true);
+        }
+
+        private void UserInfoVisibility(bool visible)
+        {
+            // Hide the control and its children recursively.
+            UserInfoVisibility(visible, this.userInfoPanel);
+        }
+
+        private void UserInfoVisibility(bool visible, Control control)
+        {
+            if(control.HasChildren)
+            {
+                foreach(Control child in control.Controls)
+                {
+                    UserInfoVisibility(visible, child);
+                }
+            }
+            control.Visible = visible;
+        }
+
         private string[] ScanValidCOMPorts()
         {
             return SerialPort.GetPortNames();
         }
 
-        public void AskForServerIP()
+        private void AskForServerIP()
         {
             // Initiate the prompt dialog.
             AskForServer promptDialog = new AskForServer();
@@ -167,5 +228,47 @@ namespace signup_sheet_client
         }
 
         #endregion
+    }
+
+    public class UserInfo
+    {
+        private Image avatar;
+        private String[] name;
+        
+        public Image Avatar
+        {
+            get
+            {
+                return avatar;
+            }
+            set
+            {
+                avatar = value;
+            }
+        }
+
+        public string FirstName
+        {
+            get
+            {
+                return name[0];
+            }
+            set
+            {
+                name[0] = value;
+            }
+        }
+
+        public string LastName
+        {
+            get
+            {
+                return name[1];
+            }
+            set
+            {
+                name[1] = value;
+            }
+        }
     }
 }
