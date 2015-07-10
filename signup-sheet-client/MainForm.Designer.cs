@@ -182,12 +182,9 @@
             // 
             // invalidUserLabel
             // 
-            this.invalidUserLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.invalidUserLabel.AutoSize = true;
             this.invalidUserLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidUserLabel.Location = new System.Drawing.Point(77, 184);
+            this.invalidUserLabel.Location = new System.Drawing.Point(83, 188);
             this.invalidUserLabel.Name = "invalidUserLabel";
             this.invalidUserLabel.Size = new System.Drawing.Size(117, 39);
             this.invalidUserLabel.TabIndex = 4;
