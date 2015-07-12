@@ -177,7 +177,7 @@ namespace signup_sheet_client
                 // Stop the probing if the reader is offline.
                 if(!CheckReaderStatus())
                 {
-                    worker.ReportProgress(1, null);
+                    worker.ReportProgress(100, null);
                     break;
                 }
 
@@ -199,10 +199,9 @@ namespace signup_sheet_client
                             this.tcpclient.SendData(Convert.ToString(cardId));
                             json = this.tcpclient.ReceiveData();
                         }
-                        catch(Exception ex)
+                        catch
                         {
-                            serverStatusLabel.Text = "Not connected.";
-                            serverStatusLabel.ForeColor = Color.Red;
+                            worker.ReportProgress(1, null);
                         }
 
                         // Parse user data from the response.
@@ -241,6 +240,11 @@ namespace signup_sheet_client
                 {
                     InvalidUser();
                 }
+            }
+            else if(e.ProgressPercentage == 1)
+            {
+                serverStatusLabel.Text = "Not connected.";
+                serverStatusLabel.ForeColor = Color.Red;
             }
             else
             {
@@ -303,7 +307,7 @@ namespace signup_sheet_client
         {
             this.invalidUserLabel.Visible = visible;
         }
-        
+
         #endregion
 
         #region Valid user.
@@ -372,7 +376,7 @@ namespace signup_sheet_client
 
         #region Menu button actions.
 
-        private void cardReaderToolStripMenuItem_MouseHover(object sender, EventArgs e)
+        private void cardReaderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string[] validPorts = ScanValidCOMPorts();
 
@@ -399,6 +403,10 @@ namespace signup_sheet_client
                 // Add the item into the menu.
                 this.cardReaderToolStripMenuItem.DropDownItems.Add(newToolStripMenuItem);
             }
+        }
+        private void cardReaderToolStripMenuItem_MouseHover(object sender, EventArgs e)
+        {
+            this.cardReaderToolStripMenuItem.PerformClick();
         }
 
         private void portToolStripMenuItem_Click(object sender, EventArgs e)
@@ -453,19 +461,29 @@ namespace signup_sheet_client
     {
         [JsonProperty("valid")]
         private bool valid = true;
+        [JsonIgnore]
+        public bool Valid
+        {
+            get
+            {
+                return this.valid;
+            }
+        }
+
         [JsonProperty("due")]
         private bool due = false;
+        [JsonIgnore]
+        public bool Due
+        {
+            get
+            {
+                return this.due;
+            }
+        }
+
         [JsonProperty("cardId")]
         private ulong cardId = 0;
-        [JsonProperty("regId")]
-        private string regId = string.Empty;
-        [JsonProperty("firstName")]
-        private string firstName = string.Empty;
-        [JsonProperty("lastName")]
-        private string lastName = string.Empty;
-
-        #region Encapsulations.
-
+        [JsonIgnore]
         public ulong CardId
         {
             get
@@ -479,14 +497,9 @@ namespace signup_sheet_client
             }
         }
 
-        public bool Valid
-        {
-            get
-            {
-                return this.valid;
-            }
-        }
-
+        [JsonProperty("regId")]
+        private string regId = string.Empty;
+        [JsonIgnore]
         public string RegId
         {
             get
@@ -495,6 +508,9 @@ namespace signup_sheet_client
             }
         }
 
+        [JsonProperty("firstName")]
+        private string firstName = string.Empty;
+        [JsonIgnore]
         public string FirstName
         {
             get
@@ -503,6 +519,9 @@ namespace signup_sheet_client
             }
         }
 
+        [JsonProperty("lastName")]
+        private string lastName = string.Empty;
+        [JsonIgnore]
         public string LastName
         {
             get
@@ -510,7 +529,5 @@ namespace signup_sheet_client
                 return this.lastName;
             }
         }
-    
-        #endregion
     }
 }

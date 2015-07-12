@@ -122,14 +122,15 @@
             // cardReaderToolStripMenuItem
             // 
             this.cardReaderToolStripMenuItem.Name = "cardReaderToolStripMenuItem";
-            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cardReaderToolStripMenuItem.Text = "Card Reader...";
+            this.cardReaderToolStripMenuItem.Click += new System.EventHandler(this.cardReaderToolStripMenuItem_Click);
             this.cardReaderToolStripMenuItem.MouseHover += new System.EventHandler(this.cardReaderToolStripMenuItem_MouseHover);
             // 
             // stopReadingToolStripMenuItem
             // 
             this.stopReadingToolStripMenuItem.Name = "stopReadingToolStripMenuItem";
-            this.stopReadingToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.stopReadingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.stopReadingToolStripMenuItem.Text = "Stop reading";
             this.stopReadingToolStripMenuItem.Visible = false;
             this.stopReadingToolStripMenuItem.Click += new System.EventHandler(this.stopReadingToolStripMenuItem_Click);
@@ -137,19 +138,19 @@
             // serverToolStripMenuItem
             // 
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.serverToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.serverToolStripMenuItem.Text = "Server...";
             this.serverToolStripMenuItem.Click += new System.EventHandler(this.serverToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(144, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
