@@ -205,14 +205,11 @@ namespace signup_sheet_client
                         }
 
                         // Parse user data from the response.
-                        UserInfo newUserInfo = JsonConvert.DeserializeObject<UserInfo>(json);
+                        State newMessage = JsonConvert.DeserializeObject<State>(json);
 
-                        if(newUserInfo != null)
+                        if(newMessage != null)
                         {
-                            // Temporary override...
-                            newUserInfo.CardId = cardId;
-
-                            worker.ReportProgress(0, newUserInfo);
+                            worker.ReportProgress(0, newMessage);
 
                             // Beep to notify the user that the reader has acknowledge the card.
                             dc_beep(this.cardReaderId, 10);
@@ -226,15 +223,15 @@ namespace signup_sheet_client
         {
             if(e.ProgressPercentage == 0)
             {
-                UserInfo newUserInfo = e.UserState as UserInfo;
-
-                // Display acquired card ID.
-                SetCardStatus(newUserInfo.CardId.ToString(), Color.Black);
+                State newMessage = e.UserState as State;
 
                 // Show invalid user if the flag bit is set.
-                if(newUserInfo.Valid)
+                if(newMessage.Valid)
                 {
-                    SetUserInfo(newUserInfo);
+                    // Display acquired card ID.
+                    SetCardStatus(newMessage.User.CardId.ToString(), Color.Black);
+
+                    SetUserInfo(newMessage.User);
                 }
                 else
                 {
@@ -249,7 +246,7 @@ namespace signup_sheet_client
             else
             {
                 // Stop the probing.
-                this.stopReadingToolStripMenuItem.PerformClick();
+                this.stopReading.PerformClick();
             }
         }
 
@@ -268,7 +265,6 @@ namespace signup_sheet_client
             this.cardStatus.Text = cardId;
             this.cardStatus.ForeColor = stringColor;
         }
-
         private void ResetCardStatus()
         {
             SetCardStatus("-", Color.Black);
@@ -282,7 +278,6 @@ namespace signup_sheet_client
             InvalidUser(true);
             invalidUserTimer.Start();
         }
-
         private void InvalidUser(string reason)
         {
             // Set the text.
@@ -302,7 +297,6 @@ namespace signup_sheet_client
 
             this.canProbe = true;
         }
-
         private void InvalidUser(bool visible)
         {
             this.invalidUserLabel.Visible = visible;
@@ -332,13 +326,11 @@ namespace signup_sheet_client
 
             this.canProbe = true;
         }
-
         private void UserInfoVisibility(bool visible)
         {
             // Hide the control and its children recursively.
             UserInfoVisibility(visible, this.userInfoPanel);
         }
-
         private void UserInfoVisibility(bool visible, Control control)
         {
             if(control.HasChildren)
@@ -353,11 +345,37 @@ namespace signup_sheet_client
 
         #endregion
 
-        private string[] ScanValidCOMPorts()
+        #endregion
+
+        #region Menu button actions.
+
+        private void connectReader_Click(object sender, EventArgs e)
         {
-            return SerialPort.GetPortNames();
+            // Hard coded the reader as USB.
+            cardReaderPort = 100;
+
+            // Initialize the reader through helper function.
+            if(InitializeCardReader(cardReaderPort))
+            {
+                // Enable the stop button if initialization succeed.
+                this.stopReading.Visible = true;
+                this.connectReader.Visible = false;
+            }
         }
 
+        private void stopReading_Click(object sender, EventArgs e)
+        {
+            DisconnectReader();
+
+            // Enable the connection detail.
+            this.connectReader.Visible = true;
+            this.stopReading.Visible = false;
+        }
+
+        private void setServer_Click(object sender, EventArgs e)
+        {
+            AskForServerIP();
+        }
         private void AskForServerIP()
         {
             // Initiate the prompt dialog.
@@ -372,92 +390,17 @@ namespace signup_sheet_client
             TryServerConnection();
         }
 
-        #endregion
-
-        #region Menu button actions.
-
-        private void cardReaderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string[] validPorts = ScanValidCOMPorts();
-
-            // Wipe previous scan result in the menu.
-            this.cardReaderToolStripMenuItem.DropDownItems.Clear();
-
-            // Use dummy content if no valid COM port exists...
-            ToolStripMenuItem usbToolStripMenuItem = new ToolStripMenuItem("USB");
-            // ...hard coded to 100, reference the manual.
-            usbToolStripMenuItem.Tag = 100;
-            usbToolStripMenuItem.Click += portToolStripMenuItem_Click;
-            this.cardReaderToolStripMenuItem.DropDownItems.Add(usbToolStripMenuItem);
-
-            // Add the COM port scan results.
-            foreach(string port in validPorts)
-            {
-                // Create a temporary object.
-                ToolStripMenuItem newToolStripMenuItem = new ToolStripMenuItem(port);
-                // Set the tag of the menu item.
-                newToolStripMenuItem.Tag = port.Substring(3);
-                // Assign the click event to the menu item.
-                newToolStripMenuItem.Click += portToolStripMenuItem_Click;
-
-                // Add the item into the menu.
-                this.cardReaderToolStripMenuItem.DropDownItems.Add(newToolStripMenuItem);
-            }
-        }
-        private void cardReaderToolStripMenuItem_MouseHover(object sender, EventArgs e)
-        {
-            this.cardReaderToolStripMenuItem.PerformClick();
-        }
-
-        private void portToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // Try to parse the tag in the menu item.
-            cardReaderPort = -1;
-            if(!Int16.TryParse((sender as ToolStripMenuItem).Tag.ToString(), out cardReaderPort))
-            {
-                throw new InvalidOperationException("Unable to parse the tag, please notify the designer.");
-            }
-
-            // Disconnect the reader first if it's still active.
-            if(this.cardReaderId != -1)
-            {
-                DisconnectReader();
-            }
-
-            // Initialize the reader through helper function.
-            if(InitializeCardReader(cardReaderPort))
-            {
-                // Enable the stop button if initialization succeed.
-                this.stopReadingToolStripMenuItem.Visible = true;
-                this.cardReaderToolStripMenuItem.Visible = false;
-            }
-        }
-
-        private void stopReadingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DisconnectReader();
-
-            // Enable the connection detail.
-            this.cardReaderToolStripMenuItem.Visible = true;
-            this.stopReadingToolStripMenuItem.Visible = false;
-        }
-
-        private void serverToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AskForServerIP();
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exit_Click(object sender, EventArgs e)
         {
             this.tcpclient.CloseConnection();
             DisconnectReader();
             this.Dispose();
         }
 
-        #endregion
+        #endregion   
     }
 
-    public class UserInfo
+    public class State
     {
         [JsonProperty("valid")]
         private bool valid = true;
@@ -481,6 +424,20 @@ namespace signup_sheet_client
             }
         }
 
+        [JsonProperty("user")]
+        private UserInfo user;
+        [JsonIgnore]
+        public UserInfo User
+        {
+            get
+            {
+                return this.user;
+            }
+        }
+    }
+
+    public class UserInfo
+    {
         [JsonProperty("cardId")]
         private ulong cardId = 0;
         [JsonIgnore]

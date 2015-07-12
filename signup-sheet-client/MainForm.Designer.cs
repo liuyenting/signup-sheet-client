@@ -36,13 +36,11 @@
             this.cardStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cardReaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopReadingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectReader = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopReading = new System.Windows.Forms.ToolStripMenuItem();
+            this.setServer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exit = new System.Windows.Forms.ToolStripMenuItem();
             this.userInfoPanel = new System.Windows.Forms.Panel();
             this.userId = new System.Windows.Forms.Label();
             this.invalidUserLabel = new System.Windows.Forms.Label();
@@ -99,8 +97,7 @@
             // mainMenuStrip
             // 
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.connectToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.connectToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
             this.mainMenuStrip.Size = new System.Drawing.Size(863, 24);
@@ -110,63 +107,48 @@
             // connectToolStripMenuItem
             // 
             this.connectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cardReaderToolStripMenuItem,
-            this.stopReadingToolStripMenuItem,
-            this.serverToolStripMenuItem,
+            this.connectReader,
+            this.stopReading,
+            this.setServer,
             this.toolStripSeparator1,
-            this.exitToolStripMenuItem});
+            this.exit});
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
             this.connectToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.connectToolStripMenuItem.Text = "Connect";
             // 
-            // cardReaderToolStripMenuItem
+            // connectReader
             // 
-            this.cardReaderToolStripMenuItem.Name = "cardReaderToolStripMenuItem";
-            this.cardReaderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.cardReaderToolStripMenuItem.Text = "Card Reader...";
-            this.cardReaderToolStripMenuItem.Click += new System.EventHandler(this.cardReaderToolStripMenuItem_Click);
-            this.cardReaderToolStripMenuItem.MouseHover += new System.EventHandler(this.cardReaderToolStripMenuItem_MouseHover);
+            this.connectReader.Name = "connectReader";
+            this.connectReader.Size = new System.Drawing.Size(181, 22);
+            this.connectReader.Text = "Connect card reader";
+            this.connectReader.Click += new System.EventHandler(this.connectReader_Click);
             // 
-            // stopReadingToolStripMenuItem
+            // stopReading
             // 
-            this.stopReadingToolStripMenuItem.Name = "stopReadingToolStripMenuItem";
-            this.stopReadingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.stopReadingToolStripMenuItem.Text = "Stop reading";
-            this.stopReadingToolStripMenuItem.Visible = false;
-            this.stopReadingToolStripMenuItem.Click += new System.EventHandler(this.stopReadingToolStripMenuItem_Click);
+            this.stopReading.Name = "stopReading";
+            this.stopReading.Size = new System.Drawing.Size(181, 22);
+            this.stopReading.Text = "Stop reading";
+            this.stopReading.Visible = false;
+            this.stopReading.Click += new System.EventHandler(this.stopReading_Click);
             // 
-            // serverToolStripMenuItem
+            // setServer
             // 
-            this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.serverToolStripMenuItem.Text = "Server...";
-            this.serverToolStripMenuItem.Click += new System.EventHandler(this.serverToolStripMenuItem_Click);
+            this.setServer.Name = "setServer";
+            this.setServer.Size = new System.Drawing.Size(181, 22);
+            this.setServer.Text = "Server...";
+            this.setServer.Click += new System.EventHandler(this.setServer_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
             // 
-            // exitToolStripMenuItem
+            // exit
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.exit.Name = "exit";
+            this.exit.Size = new System.Drawing.Size(181, 22);
+            this.exit.Text = "Exit";
+            this.exit.Click += new System.EventHandler(this.exit_Click);
             // 
             // userInfoPanel
             // 
@@ -192,11 +174,14 @@
             // 
             // invalidUserLabel
             // 
+            this.invalidUserLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.invalidUserLabel.AutoSize = true;
-            this.invalidUserLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidUserLabel.Location = new System.Drawing.Point(358, 66);
+            this.invalidUserLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.invalidUserLabel.Location = new System.Drawing.Point(281, 38);
             this.invalidUserLabel.Name = "invalidUserLabel";
-            this.invalidUserLabel.Size = new System.Drawing.Size(117, 39);
+            this.invalidUserLabel.Size = new System.Drawing.Size(321, 108);
             this.invalidUserLabel.TabIndex = 4;
             this.invalidUserLabel.Text = "Invalid";
             // 
@@ -269,12 +254,10 @@
         private System.Windows.Forms.StatusStrip mainStatusStrip;
         private System.Windows.Forms.MenuStrip mainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cardReaderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem serverToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectReader;
+        private System.Windows.Forms.ToolStripMenuItem setServer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exit;
         private System.Windows.Forms.ToolStripStatusLabel serverStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel cardReaderStatus;
         private System.Windows.Forms.ToolStripStatusLabel cardStatus;
@@ -285,7 +268,7 @@
         private System.Windows.Forms.Label invalidUserLabel;
         private System.Windows.Forms.Timer userInfoTimer;
         private System.Windows.Forms.Timer invalidUserTimer;
-        private System.Windows.Forms.ToolStripMenuItem stopReadingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopReading;
         private System.Windows.Forms.Label userId;
     }
 }
