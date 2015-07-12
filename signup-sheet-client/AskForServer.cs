@@ -32,16 +32,28 @@ namespace signup_sheet_client
 {
     public partial class AskForServer : Form
     {
+        private string newAddress;
+
         public AskForServer()
         {
             InitializeComponent();
+
+            // Default address as empty;
+        }
+
+        public AskForServer(string original)
+        {
+            InitializeComponent();
+
+            this.newAddress = original;
+            this.addressTextBox.Text = this.newAddress;
         }
 
         public string Address
         {
             get
             {
-                return this.addressTextBox.Text;
+                return this.newAddress;
             }
         }
 
@@ -49,6 +61,7 @@ namespace signup_sheet_client
 
         private void confirmButton_Click(object sender, EventArgs e)
         {
+            this.newAddress = this.addressTextBox.Text;
             this.DialogResult = DialogResult.OK;
         }
 

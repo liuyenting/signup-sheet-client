@@ -44,17 +44,16 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userInfoPanel = new System.Windows.Forms.Panel();
+            this.userId = new System.Windows.Forms.Label();
             this.invalidUserLabel = new System.Windows.Forms.Label();
             this.userLastName = new System.Windows.Forms.Label();
             this.userFirstName = new System.Windows.Forms.Label();
-            this.userAvatar = new System.Windows.Forms.PictureBox();
             this.cardReaderBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.userInfoTimer = new System.Windows.Forms.Timer(this.components);
             this.invalidUserTimer = new System.Windows.Forms.Timer(this.components);
             this.mainStatusStrip.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
             this.userInfoPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.userAvatar)).BeginInit();
             this.SuspendLayout();
             // 
             // mainStatusStrip
@@ -64,9 +63,9 @@
             this.serverStatusLabel,
             this.cardReaderStatus,
             this.cardStatus});
-            this.mainStatusStrip.Location = new System.Drawing.Point(0, 465);
+            this.mainStatusStrip.Location = new System.Drawing.Point(0, 200);
             this.mainStatusStrip.Name = "mainStatusStrip";
-            this.mainStatusStrip.Size = new System.Drawing.Size(286, 22);
+            this.mainStatusStrip.Size = new System.Drawing.Size(863, 22);
             this.mainStatusStrip.SizingGrip = false;
             this.mainStatusStrip.TabIndex = 0;
             // 
@@ -74,7 +73,7 @@
             // 
             this.serverStatusLabel.AutoSize = false;
             this.serverStatusLabel.Name = "serverStatusLabel";
-            this.serverStatusLabel.Size = new System.Drawing.Size(100, 17);
+            this.serverStatusLabel.Size = new System.Drawing.Size(300, 17);
             this.serverStatusLabel.Text = "Disconnected";
             this.serverStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -94,7 +93,7 @@
             this.cardStatus.BackColor = System.Drawing.SystemColors.Control;
             this.cardStatus.Margin = new System.Windows.Forms.Padding(3, 3, 0, 2);
             this.cardStatus.Name = "cardStatus";
-            this.cardStatus.Size = new System.Drawing.Size(60, 17);
+            this.cardStatus.Size = new System.Drawing.Size(100, 17);
             this.cardStatus.Text = "-";
             // 
             // mainMenuStrip
@@ -104,7 +103,7 @@
             this.helpToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(286, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(863, 24);
             this.mainMenuStrip.TabIndex = 1;
             this.mainMenuStrip.Text = "MainMenu";
             // 
@@ -170,21 +169,31 @@
             // 
             // userInfoPanel
             // 
+            this.userInfoPanel.Controls.Add(this.userId);
             this.userInfoPanel.Controls.Add(this.invalidUserLabel);
             this.userInfoPanel.Controls.Add(this.userLastName);
             this.userInfoPanel.Controls.Add(this.userFirstName);
-            this.userInfoPanel.Controls.Add(this.userAvatar);
             this.userInfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.userInfoPanel.Location = new System.Drawing.Point(0, 24);
             this.userInfoPanel.Name = "userInfoPanel";
-            this.userInfoPanel.Size = new System.Drawing.Size(286, 441);
+            this.userInfoPanel.Size = new System.Drawing.Size(863, 176);
             this.userInfoPanel.TabIndex = 2;
+            // 
+            // userId
+            // 
+            this.userId.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userId.Location = new System.Drawing.Point(20, 49);
+            this.userId.Name = "userId";
+            this.userId.Size = new System.Drawing.Size(225, 65);
+            this.userId.TabIndex = 5;
+            this.userId.Text = "ID";
+            this.userId.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // invalidUserLabel
             // 
             this.invalidUserLabel.AutoSize = true;
             this.invalidUserLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidUserLabel.Location = new System.Drawing.Point(83, 188);
+            this.invalidUserLabel.Location = new System.Drawing.Point(358, 66);
             this.invalidUserLabel.Name = "invalidUserLabel";
             this.invalidUserLabel.Size = new System.Drawing.Size(117, 39);
             this.invalidUserLabel.TabIndex = 4;
@@ -193,34 +202,24 @@
             // userLastName
             // 
             this.userLastName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.userLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userLastName.Location = new System.Drawing.Point(30, 386);
+            this.userLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userLastName.Location = new System.Drawing.Point(251, 92);
             this.userLastName.Margin = new System.Windows.Forms.Padding(3, 10, 3, 30);
             this.userLastName.Name = "userLastName";
-            this.userLastName.Size = new System.Drawing.Size(225, 31);
+            this.userLastName.Size = new System.Drawing.Size(600, 80);
             this.userLastName.TabIndex = 3;
-            this.userLastName.Text = "LAST_NAME";
+            this.userLastName.Text = "LASTNAME";
             this.userLastName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // userFirstName
             // 
-            this.userFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userFirstName.Location = new System.Drawing.Point(30, 345);
+            this.userFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userFirstName.Location = new System.Drawing.Point(251, 4);
             this.userFirstName.Name = "userFirstName";
-            this.userFirstName.Size = new System.Drawing.Size(225, 31);
+            this.userFirstName.Size = new System.Drawing.Size(600, 80);
             this.userFirstName.TabIndex = 2;
-            this.userFirstName.Text = "FIRST_NAME";
+            this.userFirstName.Text = "abcdefg";
             this.userFirstName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // userAvatar
-            // 
-            this.userAvatar.Location = new System.Drawing.Point(30, 21);
-            this.userAvatar.Margin = new System.Windows.Forms.Padding(30, 30, 30, 15);
-            this.userAvatar.Name = "userAvatar";
-            this.userAvatar.Size = new System.Drawing.Size(225, 300);
-            this.userAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.userAvatar.TabIndex = 1;
-            this.userAvatar.TabStop = false;
             // 
             // cardReaderBackgroundWorker
             // 
@@ -241,7 +240,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(286, 487);
+            this.ClientSize = new System.Drawing.Size(863, 222);
             this.Controls.Add(this.userInfoPanel);
             this.Controls.Add(this.mainStatusStrip);
             this.Controls.Add(this.mainMenuStrip);
@@ -259,7 +258,6 @@
             this.mainMenuStrip.PerformLayout();
             this.userInfoPanel.ResumeLayout(false);
             this.userInfoPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.userAvatar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -281,13 +279,13 @@
         private System.Windows.Forms.ToolStripStatusLabel cardStatus;
         private System.Windows.Forms.Panel userInfoPanel;
         private System.ComponentModel.BackgroundWorker cardReaderBackgroundWorker;
-        private System.Windows.Forms.PictureBox userAvatar;
         private System.Windows.Forms.Label userLastName;
         private System.Windows.Forms.Label userFirstName;
         private System.Windows.Forms.Label invalidUserLabel;
         private System.Windows.Forms.Timer userInfoTimer;
         private System.Windows.Forms.Timer invalidUserTimer;
         private System.Windows.Forms.ToolStripMenuItem stopReadingToolStripMenuItem;
+        private System.Windows.Forms.Label userId;
     }
 }
 
