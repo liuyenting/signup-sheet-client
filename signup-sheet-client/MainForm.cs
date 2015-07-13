@@ -217,6 +217,8 @@ namespace signup_sheet_client
                     }
                 }
             }
+
+            e.Cancel = true;
         }
 
         private void cardReaderBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
