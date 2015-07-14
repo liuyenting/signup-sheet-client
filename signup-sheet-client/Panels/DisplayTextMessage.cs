@@ -33,13 +33,5 @@ namespace signup_sheet_client.Panels
                 this.message.ForeColor = value;
             }
         }
-
-        public bool Visibility
-        {
-            set
-            {
-                this.Visible = value;
-            }
-        }
     }
 }

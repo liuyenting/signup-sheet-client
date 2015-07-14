@@ -28,67 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.displayRegion = new System.Windows.Forms.SplitContainer();
-            this.regId = new System.Windows.Forms.Label();
-            this.nameRegion = new System.Windows.Forms.SplitContainer();
+            this.displayRegion = new System.Windows.Forms.Panel();
+            this.idRegion = new System.Windows.Forms.Panel();
+            this.firstNameRegion = new System.Windows.Forms.Panel();
+            this.lastNameRegion = new System.Windows.Forms.Panel();
             this.firstName = new System.Windows.Forms.Label();
             this.lastName = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.displayRegion)).BeginInit();
-            this.displayRegion.Panel1.SuspendLayout();
-            this.displayRegion.Panel2.SuspendLayout();
+            this.regId = new System.Windows.Forms.Label();
             this.displayRegion.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nameRegion)).BeginInit();
-            this.nameRegion.Panel1.SuspendLayout();
-            this.nameRegion.Panel2.SuspendLayout();
-            this.nameRegion.SuspendLayout();
+            this.idRegion.SuspendLayout();
+            this.firstNameRegion.SuspendLayout();
+            this.lastNameRegion.SuspendLayout();
             this.SuspendLayout();
             // 
             // displayRegion
             // 
+            this.displayRegion.Controls.Add(this.lastNameRegion);
+            this.displayRegion.Controls.Add(this.firstNameRegion);
+            this.displayRegion.Controls.Add(this.idRegion);
             this.displayRegion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.displayRegion.IsSplitterFixed = true;
             this.displayRegion.Location = new System.Drawing.Point(0, 0);
             this.displayRegion.Name = "displayRegion";
-            // 
-            // displayRegion.Panel1
-            // 
-            this.displayRegion.Panel1.Controls.Add(this.regId);
-            // 
-            // displayRegion.Panel2
-            // 
-            this.displayRegion.Panel2.Controls.Add(this.nameRegion);
             this.displayRegion.Size = new System.Drawing.Size(821, 217);
-            this.displayRegion.SplitterDistance = 273;
             this.displayRegion.TabIndex = 0;
             // 
-            // regId
+            // idRegion
             // 
-            this.regId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.regId.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.regId.Location = new System.Drawing.Point(0, 0);
-            this.regId.Name = "regId";
-            this.regId.Size = new System.Drawing.Size(273, 217);
-            this.regId.TabIndex = 0;
-            this.regId.Text = "DL000";
-            this.regId.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.idRegion.Controls.Add(this.regId);
+            this.idRegion.Dock = System.Windows.Forms.DockStyle.Left;
+            this.idRegion.Location = new System.Drawing.Point(0, 0);
+            this.idRegion.Name = "idRegion";
+            this.idRegion.Size = new System.Drawing.Size(200, 217);
+            this.idRegion.TabIndex = 0;
             // 
-            // nameRegion
+            // firstNameRegion
             // 
-            this.nameRegion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nameRegion.Location = new System.Drawing.Point(0, 0);
-            this.nameRegion.Name = "nameRegion";
-            this.nameRegion.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.firstNameRegion.Controls.Add(this.firstName);
+            this.firstNameRegion.Dock = System.Windows.Forms.DockStyle.Top;
+            this.firstNameRegion.Location = new System.Drawing.Point(200, 0);
+            this.firstNameRegion.Name = "firstNameRegion";
+            this.firstNameRegion.Size = new System.Drawing.Size(621, 100);
+            this.firstNameRegion.TabIndex = 1;
             // 
-            // nameRegion.Panel1
+            // lastNameRegion
             // 
-            this.nameRegion.Panel1.Controls.Add(this.firstName);
-            // 
-            // nameRegion.Panel2
-            // 
-            this.nameRegion.Panel2.Controls.Add(this.lastName);
-            this.nameRegion.Size = new System.Drawing.Size(544, 217);
-            this.nameRegion.SplitterDistance = 113;
-            this.nameRegion.TabIndex = 0;
+            this.lastNameRegion.Controls.Add(this.lastName);
+            this.lastNameRegion.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lastNameRegion.Location = new System.Drawing.Point(200, 106);
+            this.lastNameRegion.Name = "lastNameRegion";
+            this.lastNameRegion.Size = new System.Drawing.Size(621, 111);
+            this.lastNameRegion.TabIndex = 2;
             // 
             // firstName
             // 
@@ -96,7 +85,7 @@
             this.firstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.firstName.Location = new System.Drawing.Point(0, 0);
             this.firstName.Name = "firstName";
-            this.firstName.Size = new System.Drawing.Size(544, 113);
+            this.firstName.Size = new System.Drawing.Size(621, 100);
             this.firstName.TabIndex = 0;
             this.firstName.Text = "FIRSTNAME";
             this.firstName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -107,10 +96,21 @@
             this.lastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lastName.Location = new System.Drawing.Point(0, 0);
             this.lastName.Name = "lastName";
-            this.lastName.Size = new System.Drawing.Size(544, 100);
+            this.lastName.Size = new System.Drawing.Size(621, 111);
             this.lastName.TabIndex = 0;
             this.lastName.Text = "LASTNAME";
             this.lastName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // regId
+            // 
+            this.regId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.regId.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.regId.Location = new System.Drawing.Point(0, 0);
+            this.regId.Name = "regId";
+            this.regId.Size = new System.Drawing.Size(200, 217);
+            this.regId.TabIndex = 1;
+            this.regId.Text = "DLxxx";
+            this.regId.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // DisplayUserInfo
             // 
@@ -119,24 +119,23 @@
             this.Controls.Add(this.displayRegion);
             this.Name = "DisplayUserInfo";
             this.Size = new System.Drawing.Size(821, 217);
-            this.displayRegion.Panel1.ResumeLayout(false);
-            this.displayRegion.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.displayRegion)).EndInit();
             this.displayRegion.ResumeLayout(false);
-            this.nameRegion.Panel1.ResumeLayout(false);
-            this.nameRegion.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nameRegion)).EndInit();
-            this.nameRegion.ResumeLayout(false);
+            this.idRegion.ResumeLayout(false);
+            this.firstNameRegion.ResumeLayout(false);
+            this.lastNameRegion.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer displayRegion;
-        private System.Windows.Forms.Label regId;
-        private System.Windows.Forms.SplitContainer nameRegion;
-        private System.Windows.Forms.Label firstName;
+        private System.Windows.Forms.Panel displayRegion;
+        private System.Windows.Forms.Panel idRegion;
+        private System.Windows.Forms.Panel lastNameRegion;
+        private System.Windows.Forms.Panel firstNameRegion;
         private System.Windows.Forms.Label lastName;
+        private System.Windows.Forms.Label firstName;
+        private System.Windows.Forms.Label regId;
+
     }
 }

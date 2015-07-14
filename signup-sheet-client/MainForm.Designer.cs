@@ -30,16 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.connectCardReader = new System.Windows.Forms.ToolStripMenuItem();
+            this.disconnectCardReader = new System.Windows.Forms.ToolStripMenuItem();
+            this.setServerAddress = new System.Windows.Forms.ToolStripMenuItem();
+            this.exit = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.applicationStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.cardReaderStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.scanForCard = new System.ComponentModel.BackgroundWorker();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.displayRegion = new System.Windows.Forms.Panel();
-            this.disconnectCardReader = new System.Windows.Forms.ToolStripMenuItem();
-            this.setServerAddress = new System.Windows.Forms.ToolStripMenuItem();
-            this.exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.connectCardReader = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -55,6 +55,35 @@
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1086, 24);
             this.menuStrip.TabIndex = 0;
+            // 
+            // connectCardReader
+            // 
+            this.connectCardReader.Name = "connectCardReader";
+            this.connectCardReader.Size = new System.Drawing.Size(126, 20);
+            this.connectCardReader.Text = "Connect card reader";
+            this.connectCardReader.Click += new System.EventHandler(this.connectCardReader_Click);
+            // 
+            // disconnectCardReader
+            // 
+            this.disconnectCardReader.Name = "disconnectCardReader";
+            this.disconnectCardReader.Size = new System.Drawing.Size(140, 20);
+            this.disconnectCardReader.Text = "Disconnect card reader";
+            this.disconnectCardReader.Visible = false;
+            this.disconnectCardReader.Click += new System.EventHandler(this.disconnectCardReader_Click);
+            // 
+            // setServerAddress
+            // 
+            this.setServerAddress.Name = "setServerAddress";
+            this.setServerAddress.Size = new System.Drawing.Size(112, 20);
+            this.setServerAddress.Text = "Set server address";
+            this.setServerAddress.Click += new System.EventHandler(this.setAddress_Click);
+            // 
+            // exit
+            // 
+            this.exit.Name = "exit";
+            this.exit.Size = new System.Drawing.Size(37, 20);
+            this.exit.Text = "Exit";
+            this.exit.Click += new System.EventHandler(this.exit_Click);
             // 
             // statusStrip
             // 
@@ -103,35 +132,6 @@
             this.displayRegion.Size = new System.Drawing.Size(1086, 215);
             this.displayRegion.TabIndex = 2;
             // 
-            // disconnectCardReader
-            // 
-            this.disconnectCardReader.Name = "disconnectCardReader";
-            this.disconnectCardReader.Size = new System.Drawing.Size(140, 20);
-            this.disconnectCardReader.Text = "Disconnect card reader";
-            this.disconnectCardReader.Visible = false;
-            this.disconnectCardReader.Click += new System.EventHandler(this.disconnectCardReader_Click);
-            // 
-            // setServerAddress
-            // 
-            this.setServerAddress.Name = "setServerAddress";
-            this.setServerAddress.Size = new System.Drawing.Size(112, 20);
-            this.setServerAddress.Text = "Set server address";
-            this.setServerAddress.Click += new System.EventHandler(this.setAddress_Click);
-            // 
-            // exit
-            // 
-            this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(37, 20);
-            this.exit.Text = "Exit";
-            this.exit.Click += new System.EventHandler(this.exit_Click);
-            // 
-            // connectCardReader
-            // 
-            this.connectCardReader.Name = "connectCardReader";
-            this.connectCardReader.Size = new System.Drawing.Size(126, 20);
-            this.connectCardReader.Text = "Connect card reader";
-            this.connectCardReader.Click += new System.EventHandler(this.connectCardReader_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -140,6 +140,7 @@
             this.Controls.Add(this.displayRegion);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -162,10 +163,10 @@
         private System.Windows.Forms.ToolStripStatusLabel cardReaderStatus;
         private System.ComponentModel.BackgroundWorker scanForCard;
         private System.Windows.Forms.Timer timer;
-        private System.Windows.Forms.Panel displayRegion;
         private System.Windows.Forms.ToolStripMenuItem disconnectCardReader;
         private System.Windows.Forms.ToolStripMenuItem setServerAddress;
         private System.Windows.Forms.ToolStripMenuItem connectCardReader;
         private System.Windows.Forms.ToolStripMenuItem exit;
+        private System.Windows.Forms.Panel displayRegion;
     }
 }

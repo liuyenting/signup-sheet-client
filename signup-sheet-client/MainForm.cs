@@ -19,13 +19,15 @@ namespace signup_sheet_client
             InitializeComponent();
 
             // Setup the forms.
+            this.displayMessage.AutoSize = false;
             this.displayMessage.Dock = DockStyle.Fill;
-            this.displayMessage.Visibility = false;
             this.displayMessage.Show();
 
+            this.displayUserInfo.AutoSize = false;
             this.displayUserInfo.Dock = DockStyle.Fill;
-            this.displayUserInfo.Visibility = false;
             this.displayUserInfo.Show();
+
+            this.displayRegion.Controls.Add(this.displayUserInfo);
 
             // Setup timer.
             this.timer.Interval = displayInterval;
@@ -33,6 +35,9 @@ namespace signup_sheet_client
             // Set the status bar.
             this.cardReaderStatus.Text = "Disconnected.";
             this.cardReaderStatus.ForeColor = Color.Black;
+
+            this.applicationStatus.Text = string.Empty;
+            this.applicationStatus.ForeColor = Color.Black;
         }
 
         #region Card reader related functions.
@@ -200,7 +205,7 @@ namespace signup_sheet_client
                     this.displayMessage.Color = Color.Black;
                 }
 
-                this.displayMessage.Visibility = true;
+                this.displayRegion.Controls.Add(this.displayMessage);
             }
             else
             {
@@ -208,7 +213,7 @@ namespace signup_sheet_client
                 this.displayUserInfo.FirstName = payload.User.FirstName;
                 this.displayUserInfo.LastName = payload.User.LastName;
 
-                this.displayUserInfo.Visibility = true;
+                this.displayRegion.Controls.Add(this.displayUserInfo);
             }
 
             timer.Start();
@@ -217,8 +222,7 @@ namespace signup_sheet_client
         {
             timer.Stop();
 
-            this.displayMessage.Visibility = false;
-            this.displayUserInfo.Visibility = false;
+            this.displayRegion.Controls.Clear();
 
             // Unblock reading.
             this.blockReading = false;

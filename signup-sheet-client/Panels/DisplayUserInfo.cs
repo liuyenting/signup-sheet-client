@@ -18,9 +18,9 @@ namespace signup_sheet_client.Panels
         {
             InitializeComponent();
 
-            // Set splitter location.
-            this.displayRegion.SplitterDistance = (int)(this.displayRegion.ClientSize.Width * splitterPercentage);
-            this.nameRegion.SplitterDistance = (int)(this.displayRegion.ClientSize.Width * 0.5);
+            // Set panel size.
+            this.idRegion.Width = (int)(this.ClientSize.Width * 0.4);
+            this.firstNameRegion.Height = this.lastNameRegion.Height = (int)(this.idRegion.ClientSize.Height * 0.5);
         }
 
         public string RegId
@@ -44,14 +44,6 @@ namespace signup_sheet_client.Panels
             set
             {
                 this.lastName.Text = value;
-            }
-        }
-
-        public bool Visibility
-        {
-            set
-            {
-                this.Visible = value;
             }
         }
     }
