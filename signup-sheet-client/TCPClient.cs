@@ -9,7 +9,7 @@ namespace signup_sheet_client
 {
     class TCPClient
     {
-        System.Net.Sockets.TcpClient clientSocket = new System.Net.Sockets.TcpClient();
+        TcpClient clientSocket = new TcpClient();
         NetworkStream serverStream;
 
         public TCPClient()
@@ -20,37 +20,47 @@ namespace signup_sheet_client
         {
             string[] detail = address.Split(':');
 
-            int port = (detail[1].Length == 0)?12000: Int16.Parse(detail[1]);
-            clientSocket.Connect(detail[0], port);
+            int port = (detail[1].Length == 0) ? 12000 : Int16.Parse(detail[1]);
+            this.clientSocket.Connect(detail[0], port);
+        }
+        public void CloseConnection()
+        {
+            this.clientSocket.Close();
         }
 
         public void SendData(string dataTosend)
         {
+            // Don't waste the time sending if the payload is empty.
             if(string.IsNullOrEmpty(dataTosend))
+            {
                 return;
-            NetworkStream serverStream = clientSocket.GetStream();
+            }
+
+            // Get the stream in order to initiate the conversation.
+            this.serverStream = this.clientSocket.GetStream();
+
+            // Convert the stream for output format, byte stream.
             byte[] outStream = System.Text.Encoding.ASCII.GetBytes(dataTosend);
-            serverStream.Write(outStream, 0, outStream.Length);
-            serverStream.Flush();
+
+            // Perform the communication.
+            this.serverStream.Write(outStream, 0, outStream.Length);
+            this.serverStream.Flush();
         }
 
-        public void CloseConnection()
-        {
-            clientSocket.Close();
-        }
         public string ReceiveData()
         {
+            // Start to construct the input data stream storage.
             StringBuilder message = new StringBuilder();
-            NetworkStream serverStream = clientSocket.GetStream();
-            serverStream.ReadTimeout = 100;
-            //the loop should continue until no dataavailable to read and message string is filled.
-            //if data is not available and message is empty then the loop should continue, until
-            //data is available and message is filled.
+            this.serverStream = this.clientSocket.GetStream();
+
+            this.serverStream.ReadTimeout = 100;
+
+            // The loop should continue until no more data is coming.
             while(true)
             {
-                if(serverStream.DataAvailable)
+                if(this.serverStream.DataAvailable)
                 {
-                    int read = serverStream.ReadByte();
+                    int read = this.serverStream.ReadByte();
                     if(read > 0)
                         message.Append((char)read);
                     else
