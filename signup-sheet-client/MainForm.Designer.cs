@@ -119,14 +119,15 @@
             // connectReader
             // 
             this.connectReader.Name = "connectReader";
-            this.connectReader.Size = new System.Drawing.Size(181, 22);
+            this.connectReader.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.connectReader.Size = new System.Drawing.Size(223, 22);
             this.connectReader.Text = "Connect card reader";
             this.connectReader.Click += new System.EventHandler(this.connectReader_Click);
             // 
             // stopReading
             // 
             this.stopReading.Name = "stopReading";
-            this.stopReading.Size = new System.Drawing.Size(181, 22);
+            this.stopReading.Size = new System.Drawing.Size(223, 22);
             this.stopReading.Text = "Stop reading";
             this.stopReading.Visible = false;
             this.stopReading.Click += new System.EventHandler(this.stopReading_Click);
@@ -134,19 +135,20 @@
             // setServer
             // 
             this.setServer.Name = "setServer";
-            this.setServer.Size = new System.Drawing.Size(181, 22);
+            this.setServer.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.setServer.Size = new System.Drawing.Size(223, 22);
             this.setServer.Text = "Server...";
             this.setServer.Click += new System.EventHandler(this.setServer_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
             // 
             // exit
             // 
             this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(181, 22);
+            this.exit.Size = new System.Drawing.Size(223, 22);
             this.exit.Text = "Exit";
             this.exit.Click += new System.EventHandler(this.exit_Click);
             // 
