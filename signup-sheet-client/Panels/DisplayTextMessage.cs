@@ -17,7 +17,8 @@ namespace signup_sheet_client.Panels
             InitializeComponent();
         }
 
-        public string Text
+        
+        public override string Text
         {
             set
             {
@@ -33,7 +34,7 @@ namespace signup_sheet_client.Panels
             }
         }
 
-        public bool Visible
+        public bool Visibility
         {
             set
             {
