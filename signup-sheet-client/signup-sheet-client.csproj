@@ -92,7 +92,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CardReader\ReaderWrapper.cs" />
-    <Compile Include="TCPClient.cs" />
     <EmbeddedResource Include="AskForServer.resx">
       <DependentUpon>AskForServer.cs</DependentUpon>
     </EmbeddedResource>

@@ -14,9 +14,6 @@ namespace signup_sheet_client
 {
     public partial class MainForm : Form
     {
-        private DisplayTextMessage displayMessage = new DisplayTextMessage();
-        private DisplayUserInfo displayUserInfo = new DisplayUserInfo();
-
         public MainForm()
         {
             InitializeComponent();
@@ -103,7 +100,12 @@ namespace signup_sheet_client
         {
             using(AskForServer dialog = new AskForServer(this.serverAddress))
             {
-                
+                DialogResult status = dialog.ShowDialog();
+                if(status == DialogResult.OK)
+                {
+                    // Update current server address.
+                    this.serverAddress = dialog.Address;
+                }
             }
         }
 
@@ -111,12 +113,25 @@ namespace signup_sheet_client
 
         private void exit_Click(object sender, EventArgs e)
         {
+            // Stop the background worker.
+            if(this.scanForCard.IsBusy)
+            {
+                this.scanForCard.CancelAsync();
+            }
 
+            // Close the application.
+            this.Dispose();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            this.exit.PerformClick();
+        }
 
+        private void scanForCard_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Stop the reader.
+            this.disconnectCardReader.PerformClick();
         }
 
         #endregion
@@ -124,30 +139,51 @@ namespace signup_sheet_client
         #region Background worker.
 
         private Communication network = new Communication();
-        private Payload response;
+
+        private bool blockReading = false;
 
         private void scanForCard_DoWork(object sender, DoWorkEventArgs e)
         {
             string cardId;
             while(!this.scanForCard.CancellationPending)
             {
-                cardId = string.Empty;
-                if(this.cardReader.TryRead(out cardId))
+                if(!blockReading)
                 {
-                    // Print the card ID.
-                    this.cardReaderStatus.Text = cardId;
-                    this.cardReaderStatus.ForeColor = Color.Blue;
+                    cardId = string.Empty;
+                    if(this.cardReader.TryRead(out cardId))
+                    {
+                        // Prevent multiple read.
+                        this.blockReading = true;
 
-                    this.network.Send(cardId);
-                    this.response = new Payload(this.network.Receive());
+                        // Print the card ID.
+                        this.cardReaderStatus.Text = cardId;
+                        this.cardReaderStatus.ForeColor = Color.Blue;
+
+                        this.applicationStatus.Text = "Communicate with " + this.serverAddress + "...";
+
+                        // Network.
+                        this.network.Connect(this.serverAddress);
+                        this.network.Send(cardId);
+                        string data = this.network.Receive();
+                        this.scanForCard.ReportProgress(0, new Payload(data));
+                        this.network.Disconnect();
+
+                        this.applicationStatus.Text = "End communication.";
+                    }
                 }
             }
         }
 
-        
+        private DisplayTextMessage displayMessage = new DisplayTextMessage();
+        private DisplayUserInfo displayUserInfo = new DisplayUserInfo();
 
         private const int displayInterval = 2000;
 
+        private void scanForCard_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            Payload payload = e.UserState as Payload;
+            PayloadParser(payload);
+        }
         private void PayloadParser(Payload payload)
         {
             if((!payload.Valid) || (!payload.Due))
@@ -183,11 +219,9 @@ namespace signup_sheet_client
 
             this.displayMessage.Visibility = false;
             this.displayUserInfo.Visibility = false;
-        }
 
-        private void scanForCard_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-
+            // Unblock reading.
+            this.blockReading = false;
         }
 
         #endregion
