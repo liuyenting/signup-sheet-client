@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace signup_sheet_client.Network
 {
-    class Communication
+    class Communication : IDisposable
     {
         private TcpClient clientSocket;
         private NetworkStream serverStream;
@@ -31,13 +31,18 @@ namespace signup_sheet_client.Network
             try
             {
                 this.clientSocket.Connect(this.address, this.port);
-            }catch(SocketException)
+            }
+            catch(SocketException)
             {
                 return false;
             }
             return this.clientSocket.Connected;
         }
         public void Disconnect()
+        {
+            Dispose();
+        }
+        public void Dispose()
         {
             if(this.clientSocket != null)
             {
