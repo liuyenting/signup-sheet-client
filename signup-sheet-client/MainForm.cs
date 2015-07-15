@@ -27,17 +27,12 @@ namespace signup_sheet_client
             this.displayUserInfo.Dock = DockStyle.Fill;
             this.displayUserInfo.Show();
 
-            this.displayRegion.Controls.Add(this.displayUserInfo);
-
             // Setup timer.
             this.timer.Interval = displayInterval;
 
             // Set the status bar.
             this.cardReaderStatus.Text = "Disconnected.";
-            this.cardReaderStatus.ForeColor = Color.Black;
-
             this.applicationStatus.Text = string.Empty;
-            this.applicationStatus.ForeColor = Color.Black;
         }
 
         #region Card reader related functions.
@@ -56,26 +51,26 @@ namespace signup_sheet_client
             if(this.cardReaderConnected)
             {
                 this.cardReaderStatus.Text = "Connected.";
-                this.cardReaderStatus.ForeColor = Color.Black;
 
                 // Change menu state if connected.
                 this.disconnectCardReader.Visible = this.cardReaderConnected;
                 this.connectCardReader.Visible = !this.disconnectCardReader.Visible;
-            
-                // Start the background worker.
 
+                this.setServerAddress.Enabled = false;
+
+                // Start the background worker.
+                this.scanForCard.RunWorkerAsync();
             }
             else
             {
-                this.cardReaderStatus.Text = "Fail to connect.";
-                this.cardReaderStatus.ForeColor = Color.Red;
+                this.cardReaderStatus.Text = "Failed to connect.";
             }
         }
 
         private void disconnectCardReader_Click(object sender, EventArgs e)
         {
             // Stop the background worker.
-            this.scanForCard.RunWorkerAsync();
+            this.scanForCard.CancelAsync();
 
             // Disconnect.
             this.cardReaderConnected = !this.cardReader.Close();
@@ -87,19 +82,19 @@ namespace signup_sheet_client
                 this.disconnectCardReader.Visible = this.cardReaderConnected;
                 this.connectCardReader.Visible = !this.disconnectCardReader.Visible;
 
+                this.setServerAddress.Enabled = true;
+
                 this.cardReaderStatus.Text = "Disconnected.";
-                this.cardReaderStatus.ForeColor = Color.Black;
             }
             else
             {
                 this.cardReaderStatus.Text = "Fail to disconnect.";
-                this.cardReaderStatus.ForeColor = Color.Red;
             }
         }
 
         #endregion
 
-        private string serverAddress = string.Empty;
+        private string serverAddress = "localhost:12000"; //string.Empty;
 
         private void setAddress_Click(object sender, EventArgs e)
         {
@@ -128,8 +123,18 @@ namespace signup_sheet_client
             this.Dispose();
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            base.OnFormClosing(e);
+
+            // Prevent blocking Windows shutdown.
+            if(e.CloseReason == CloseReason.WindowsShutDown)
+            {
+                return;
+            }
+
+            // Cancel the original close operation.
+            e.Cancel = true;
             this.exit.PerformClick();
         }
 
@@ -137,6 +142,9 @@ namespace signup_sheet_client
         {
             // Stop the reader.
             this.disconnectCardReader.PerformClick();
+
+            // Stop the network.
+            this.network.Disconnect();
         }
 
         #endregion
@@ -149,10 +157,26 @@ namespace signup_sheet_client
 
         private void scanForCard_DoWork(object sender, DoWorkEventArgs e)
         {
+            bool status;
+
+            // Try to initiate the network connection.
+            status = this.network.Connect(this.serverAddress);
+            if(!status)
+            {
+                this.applicationStatus.Text = "Server out of reach.";
+
+                e.Cancel = true;
+                return;
+            }
+            else
+            {
+                this.applicationStatus.Text = string.Empty;
+            }
+
             string cardId;
             while(!this.scanForCard.CancellationPending)
             {
-                if(!blockReading)
+                if(!this.blockReading)
                 {
                     cardId = string.Empty;
                     if(this.cardReader.TryRead(out cardId))
@@ -162,18 +186,19 @@ namespace signup_sheet_client
 
                         // Print the card ID.
                         this.cardReaderStatus.Text = cardId;
-                        this.cardReaderStatus.ForeColor = Color.Blue;
 
-                        this.applicationStatus.Text = "Communicate with " + this.serverAddress + "...";
+                        Console.WriteLine("cardId = " + cardId.ToString());
 
                         // Network.
-                        this.network.Connect(this.serverAddress);
-                        this.network.Send(cardId);
-                        string data = this.network.Receive();
-                        this.scanForCard.ReportProgress(0, new Payload(data));
-                        this.network.Disconnect();
-
-                        this.applicationStatus.Text = "End communication.";
+                        string data;
+                        if(this.network.Send(cardId) && this.network.Receive(out data))
+                        {
+                            this.scanForCard.ReportProgress(0, new Payload(data));
+                        }
+                        else
+                        {
+                            this.applicationStatus.Text = "Failed to communicate with the server.";
+                        }
                     }
                 }
             }
@@ -191,18 +216,16 @@ namespace signup_sheet_client
         }
         private void PayloadParser(Payload payload)
         {
-            if((!payload.Valid) || (!payload.Due))
+            if((!payload.Valid) || payload.Due)
             {
                 // Set the display message.
                 if(!payload.Valid)
                 {
                     this.displayMessage.Text = "Invalid user.";
-                    this.displayMessage.Color = Color.Red;
                 }
                 else
                 {
-                    this.displayMessage.Text = "Due.";
-                    this.displayMessage.Color = Color.Black;
+                    this.displayMessage.Text = "Signup time passed.";
                 }
 
                 this.displayRegion.Controls.Add(this.displayMessage);
@@ -222,7 +245,14 @@ namespace signup_sheet_client
         {
             timer.Stop();
 
+            // Clear the display region.
             this.displayRegion.Controls.Clear();
+            // Clear the status bar.
+            this.applicationStatus.Text = string.Empty;
+            // TODO: hard-coded the card reader status as connected for now.
+            this.cardReaderStatus.Text = "Connected.";
+
+            Console.WriteLine("timer_Tick() raised.");
 
             // Unblock reading.
             this.blockReading = false;

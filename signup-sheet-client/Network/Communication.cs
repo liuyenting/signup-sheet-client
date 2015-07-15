@@ -9,40 +9,77 @@ namespace signup_sheet_client.Network
 {
     class Communication
     {
-        private TcpClient clientSocket = new TcpClient();
+        private TcpClient clientSocket;
         private NetworkStream serverStream;
 
-        public void Connect(string rawAddress)
+        private const int retryTimes = 5;
+
+        private string address;
+        private short port;
+
+        public bool Connect(string rawAddress)
         {
             // Split the string according to the ':'.
             string[] address = rawAddress.Split(':');
 
-            short parsedPortNumber = short.Parse(address[1]);
-            this.clientSocket.Connect(address[0], parsedPortNumber);
+            this.address = address[0];
+            this.port = short.Parse(address[1]);
+
+            // The TcpClient is disposed whenever it fails.
+            this.clientSocket = new TcpClient();
+
+            try
+            {
+                this.clientSocket.Connect(this.address, this.port);
+            }catch(SocketException)
+            {
+                return false;
+            }
+            return this.clientSocket.Connected;
         }
         public void Disconnect()
         {
-            this.clientSocket.Close();
+            if(this.clientSocket != null)
+            {
+                this.clientSocket.Close();
+            }
         }
 
-        public void Send(string data)
+        public bool Send(string data)
         {
             // Don't waste the time to send if the payload is empty.
             if(string.IsNullOrEmpty(data))
             {
-                return;
+                return true;
             }
 
             // Get the stream in order to initaiate the conversation.
-            this.serverStream = this.clientSocket.GetStream();
+            try
+            {
+                this.serverStream = this.clientSocket.GetStream();
 
-            // Convert the stream to bytes and transmit it.
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
-            this.serverStream.Write(byteData, 0, byteData.Length);
-            this.serverStream.Flush();
+                // Convert the stream to bytes and transmit it.
+                byte[] byteData = Encoding.ASCII.GetBytes(data);
+                this.serverStream.Write(byteData, 0, byteData.Length);
+                this.serverStream.Flush();
+            }
+            catch(ObjectDisposedException)
+            {
+                // Server not connected.
+                return false;
+            }
+
+            return true;
         }
-        public string Receive()
+        public bool Receive(out string payload)
         {
+            payload = string.Empty;
+
+            if(!this.clientSocket.Connected)
+            {
+                return false;
+            }
+
             // Create the buffer to store the input.
             StringBuilder data = new StringBuilder();
             this.serverStream = this.clientSocket.GetStream();
@@ -72,7 +109,8 @@ namespace signup_sheet_client.Network
             }
 
             // Convert back to string object from StringBuilder.
-            return data.ToString();
+            payload = data.ToString();
+            return true;
         }
     }
 }

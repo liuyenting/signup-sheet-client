@@ -74,7 +74,8 @@ namespace signup_sheet_client
 
         public bool Beep()
         {
-            this.status = NativeMethods.dc_beep(this.handler, beepDuration);
+            //this.status = NativeMethods.dc_beep(this.handler, beepDuration);
+            this.status = 0;
             return (this.status == 0);
         }
 
@@ -85,6 +86,8 @@ namespace signup_sheet_client
 
             ulong rawIdValue = 0;
             this.status = NativeMethods.dc_card(this.handler, readMode, ref rawIdValue);
+
+            Console.WriteLine("TryRead() called, this.status = " + this.status.ToString() + ", rawIdValue = " + rawIdValue.ToString());
 
             if(this.status == 0)
             {
