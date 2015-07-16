@@ -74,7 +74,7 @@ namespace signup_sheet_client
 
         public bool Beep()
         {
-            //this.status = NativeMethods.dc_beep(this.handler, beepDuration);
+            this.status = NativeMethods.dc_beep(this.handler, beepDuration);
             this.status = 0;
             return (this.status == 0);
         }

@@ -186,6 +186,7 @@ namespace signup_sheet_client
 
                         // Print the card ID.
                         this.cardReaderStatus.Text = cardId;
+                        this.cardReader.Beep();
 
                         Console.WriteLine("cardId = " + cardId.ToString());
 
